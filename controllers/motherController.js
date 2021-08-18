@@ -17,18 +17,18 @@ router.post("/create", validateJWT, async (req, res) => {
   } catch {
     res.status(500).json({ error: err });
   }
-  MotherModel.create(motherEntry);
+  // MotherModel.create(motherEntry);
 });
 
 router.get("/all", validateJWT, async (req, res) => {
   let { id } = req.user;
   try {
-    const userJournals = await MotherModel.findAll({
+    const userMother = await MotherModel.findAll({
       where: {
         owner: id,
       },
     });
-    res.status(200).json(userJournals);
+    res.status(200).json(userMother);
   } catch (err) {
     res.status(500).json({ error: err });
   }

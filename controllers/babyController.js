@@ -58,12 +58,12 @@ GET ALL ENTRIES
 router.get("/all", validateJWT, async (req, res) => {
   let { id } = req.user;
   try {
-    const userJournals = await BabyModel.findAll({
+    const userBaby = await BabyModel.findAll({
       where: {
         owner: id,
       },
     });
-    res.status(200).json(userJournals);
+    res.status(200).json(userBaby);
   } catch (err) {
     res.status(500).json({ error: err });
   }
@@ -73,7 +73,23 @@ router.get("/all", validateJWT, async (req, res) => {
 UPDATE AN ENTRY
 +++++++++++++++++++++++++++++++++++++++++++*/
 router.put("/:entryId", validateJWT, async (req, res) => {
-  const { day, feedingTime1 } = req.body;
+  const {
+    day,
+    feedingTime1,
+    feedingTime2,
+    feedingTime3,
+    feedingTime4,
+    feedingTime5,
+    feedingTime6,
+    feedingTime7,
+    feedingTime8,
+    wetDiaper1,
+    wetDiaper2,
+    wetDiaper3,
+    soilDiaper1,
+    soilDiaper2,
+    soilDiaper3,
+  } = req.body;
   const babyId = req.params.entryId;
   const userId = req.user.id;
   const query = {
@@ -85,6 +101,20 @@ router.put("/:entryId", validateJWT, async (req, res) => {
     updatedMother = {
       day,
       feedingTime1,
+      feedingTime1,
+      feedingTime2,
+      feedingTime3,
+      feedingTime4,
+      feedingTime5,
+      feedingTime6,
+      feedingTime7,
+      feedingTime8,
+      wetDiaper1,
+      wetDiaper2,
+      wetDiaper3,
+      soilDiaper1,
+      soilDiaper2,
+      soilDiaper3,
     };
   try {
     const update = await BabyModel.update(updatedMother, query);
@@ -103,13 +133,13 @@ router.delete("/:deleteId", validateJWT, async (req, res) => {
   try {
     const query = {
       where: {
-        id: babyId,
+        day: babyId,
         owner: ownerId,
       },
     };
     await BabyModel.destroy(query);
     res.status(200).json({
-      message: `The medication was deleted`,
+      message: `The day entry was deleted`,
     });
   } catch (err) {
     res.status(500).json({ error: err });
