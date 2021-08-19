@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { UserModel } = require("../models");
 
+
 const validateJWT = async (req, res, next) => {
   if (req.method == "OPTIONS") {
     next();
@@ -25,4 +26,4 @@ const validateJWT = async (req, res, next) => {
     res.status(403).send({ message: "Fobidden not for you" });
   }
 };
-module.exports = validateJWT;
+module.exports = validateJWT ;

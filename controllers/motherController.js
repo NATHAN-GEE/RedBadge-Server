@@ -34,6 +34,19 @@ router.get("/all", validateJWT, async (req, res) => {
   }
 });
 
+router.get("/every", validateJWT, async (req, res) => {
+  try {
+    if (req.user.role === "admin") {
+      const all = await MotherModel.findAll();
+      res.status(200).json(all);
+    } else {
+      res.send("not authorized.");
+    }
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
 router.put("/:entryId", validateJWT, async (req, res) => {
   const { med, amount } = req.body;
   const motherId = req.params.entryId;

@@ -1,13 +1,9 @@
-// Handle the routing of the requests it will process the information and then send it back to the client.
-
 const router = require("express").Router();
-const { UserModel } = require("../models")
+const { UserModel } = require("../models");
 const { UniqueConstraintError } = require("sequelize/lib/errors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-//whenever you get a post request at the endpoint of register do this code. that is a controller.
-//setting up what happens when that request is made by the client specific to this endpoint.
 router.post("/register", async (req, res) => {
   let { email, password } = req.body; //destructuring what the user sent you with the params of email and password.
   try {
@@ -15,9 +11,13 @@ router.post("/register", async (req, res) => {
       email,
       password: bcrypt.hashSync(password, 13),
     });
-    let token = jwt.sign({ id: user.id, email: user.email }, process.env.TURTLES, {
-      expiresIn: 60 * 60 * 24,
-    });
+    let token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.TURTLES,
+      {
+        expiresIn: 60 * 60 * 24,
+      }
+    );
     res.status(201).json({
       message: "user successfully registered.",
       user: user,

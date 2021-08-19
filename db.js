@@ -1,7 +1,5 @@
 const Sequelize = require("sequelize");
 
-const sequelize = new Sequelize(
-  "postgres://postgres:Nathangee23!!!@localhost:5432/RedBadge"
-);
+const sequelize = new Sequelize(process.env.ROMAN);
 
 module.exports = sequelize;

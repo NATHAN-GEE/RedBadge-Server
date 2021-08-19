@@ -46,7 +46,7 @@ router.post("/create", validateJWT, async (req, res) => {
   try {
     const newBaby = await BabyModel.create(babyEntry);
     res.status(200).json(newBaby);
-  } catch {
+  } catch (err){
     res.status(500).json({ error: err });
   }
   //   BabyModel.create(babyEntry);
