@@ -3,6 +3,41 @@ const router = Express.Router();
 let validateJWT = require("../middleware/validate");
 const { MotherModel } = require("../models");
 
+////////ADMIN///////////////
+////////ADMIN///////////////
+////////ADMIN///////////////
+router.get("/every", validateJWT, async (req, res) => {
+  try {
+    if (req.user.role === "admin") {
+      const all = await MotherModel.findAll();
+      res.status(200).json(all);
+    } else {
+      res.send("not authorized.");
+    }
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+router.delete("/admin/:id", validateJWT, async (req, res) => {
+  try {
+    const query = {
+      where: {
+        id: req.params.id,
+      },
+    };
+    await MotherModel.destroy(query);
+    res.status(200).json({
+      message: `The medication was deleted`,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+/////////////MOTHER//////////////////
+/////////////MOTHER//////////////////
+/////////////MOTHER//////////////////
+/////////////MOTHER//////////////////
+/////////////MOTHER//////////////////
 router.post("/create", validateJWT, async (req, res) => {
   const { med, amount } = req.body;
   const { id } = req.user;
@@ -29,19 +64,6 @@ router.get("/all", validateJWT, async (req, res) => {
       },
     });
     res.status(200).json(userMother);
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-});
-
-router.get("/every", validateJWT, async (req, res) => {
-  try {
-    if (req.user.role === "admin") {
-      const all = await MotherModel.findAll();
-      res.status(200).json(all);
-    } else {
-      res.send("not authorized.");
-    }
   } catch (err) {
     res.status(500).json({ error: err });
   }
