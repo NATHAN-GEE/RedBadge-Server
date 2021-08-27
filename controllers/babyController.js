@@ -46,7 +46,7 @@ router.post("/create", validateJWT, async (req, res) => {
   try {
     const newBaby = await BabyModel.create(babyEntry);
     res.status(200).json(newBaby);
-  } catch (err){
+  } catch (err) {
     res.status(500).json({ error: err });
   }
   //   BabyModel.create(babyEntry);
@@ -133,7 +133,7 @@ router.delete("/:deleteId", validateJWT, async (req, res) => {
   try {
     const query = {
       where: {
-        day: babyId,
+        id: babyId,
         owner: ownerId,
       },
     };
