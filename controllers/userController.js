@@ -5,11 +5,12 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 router.post("/register", async (req, res) => {
-  let { email, password } = req.body; //destructuring what the user sent you with the params of email and password.
+  let { email, password, role } = req.body; //destructuring what the user sent you with the params of email and password.
   try {
     const user = await UserModel.create({
       email,
       password: bcrypt.hashSync(password, 13),
+      role
     });
     let token = jwt.sign(
       { id: user.id, email: user.email },
