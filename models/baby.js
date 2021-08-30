@@ -5,7 +5,6 @@ const baby = db.define( "baby", {
   day: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
   },
   feedingTime1: {
     type: DataTypes.STRING,
